@@ -6,8 +6,8 @@ namespace Qybi.UOWTemplate.Models;
 public record IEntity
 {
     [Key]
-    public int Id { get; init; }
+    public int Id { get; set; }
     [Required]
-    public DateTime CreatedAt { get; init; } = DateTime.Now;
-    public DateTime? UpdatedAt { get; init; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
 }
