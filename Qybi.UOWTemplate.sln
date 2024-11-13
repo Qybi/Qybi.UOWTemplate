@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qybi.UOWTemplate", "Qybi.UO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qybi.UOWTemplate.Models", "Qybi.UOWTemplate.Models\Qybi.UOWTemplate.Models.csproj", "{69005B33-C5B1-458E-9982-2CA171D37189}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qybi.UOWTemplate.Helpers", "Qybi.UOWTemplate.Helpers\Qybi.UOWTemplate.Helpers.csproj", "{647CB6E9-D50B-4616-B77C-159BB2F2F9BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{69005B33-C5B1-458E-9982-2CA171D37189}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69005B33-C5B1-458E-9982-2CA171D37189}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69005B33-C5B1-458E-9982-2CA171D37189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647CB6E9-D50B-4616-B77C-159BB2F2F9BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647CB6E9-D50B-4616-B77C-159BB2F2F9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647CB6E9-D50B-4616-B77C-159BB2F2F9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647CB6E9-D50B-4616-B77C-159BB2F2F9BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

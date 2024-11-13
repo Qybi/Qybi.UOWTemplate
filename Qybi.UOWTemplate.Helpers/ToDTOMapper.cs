@@ -1,7 +1,7 @@
 ﻿using Qybi.UOWTemplate.Models.DTO;
 using Qybi.UOWTemplate.Models.Entities;
 
-namespace Qybi.UOWTemplate.Models;
+namespace Qybi.UOWTemplate.Helpers;
 
 public class ToDTOMapper
 {
