@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Qybi.UOWTemplate.DataAccess.Contexts;
 using Qybi.UOWTemplate.DataAccess.Abstractions;
 using Qybi.UOWTemplate.DataAccess;
+using Qybi.UOWTemplate.DataAccess.Abstractions.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("db"));
 });
+
+builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>
 
 var app = builder.Build();
 

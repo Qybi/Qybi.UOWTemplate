@@ -5,7 +5,7 @@ using Qybi.UOWTemplate.Models.Entities;
 
 namespace Qybi.UOWTemplate.DataAccess.Contexts;
 
-public class ApplicationDbContext : DbContext, IApplicationContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
