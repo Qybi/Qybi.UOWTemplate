@@ -13,4 +13,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Qybi.UOWTemplate.DataAccess.Abstractions\Qybi.UOWTemplate.DataAccess.Abstractions.csproj" />
+    <ProjectReference Include="..\Qybi.UOWTemplate.DataAccess\Qybi.UOWTemplate.DataAccess.csproj" />
+    <ProjectReference Include="..\Qybi.UOWTemplate.Models\Qybi.UOWTemplate.Models.csproj" />
+  </ItemGroup>
+
 </Project>
