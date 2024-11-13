@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Qybi.UOWTemplate.Models;
 
-public interface IEntity
+public record IEntity
 {
     [Key]
     public int Id { get; set; }
