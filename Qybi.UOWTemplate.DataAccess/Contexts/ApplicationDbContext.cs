@@ -28,10 +28,16 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         // For any other DB engine than SQLServer, you need to map the entity properties to the correct data types
         // Relationship reference: https://docs.microsoft.com/en-us/ef/core/modeling/relationships
-        modelBuilder.Entity<Product>()
-            .HasOne(p => p.Category)
-            .WithMany(c => c.Products)
-            .HasForeignKey(p => p.CategoryId);
+
+        // first one is cleaner in case of defining multiple relationships and properties
+        modelBuilder.Entity<Product>(e =>
+        {
+            e.HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId);
+
+            // e.Property(p => p.Name).HasColumnType("varchar(255)");
+        });
 
         modelBuilder.Entity<Category>()
             .HasMany(c => c.Products)
