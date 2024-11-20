@@ -47,7 +47,7 @@ public static class CategoryEndpoint
         _uow.Repository().Add(category);
         await _uow.CommitAsync();
         var result = ToDTOMapper.MapStrict(category);
-        return TypedResults.Created($"/api/v1/{category.Id}", result);
+        return TypedResults.Created($"/api/v1/categories/{category.Id}", result);
     }
     private static async Task<Results<Ok<CategoryDTOStrict>, NotFound>> UpdateCategoryAsync(IUnitOfWork _uow, int id, CategoryDTOStrict categoryDto)
     {

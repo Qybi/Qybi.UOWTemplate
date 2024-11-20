@@ -58,7 +58,7 @@ public static class ProductEndpoint
         await _uow.CommitAsync();
 
         var result = ToDTOMapper.MapStrict(product);
-        return TypedResults.Created($"/api/v1/{product.Id}", result);
+        return TypedResults.Created($"/api/v1/products/{product.Id}", result);
     }
 
     private static async Task<Results<Ok<ProductDTO>, NotFound>> UpdateProductAsync(IUnitOfWork _uow, int id, ProductDTO productDto)
