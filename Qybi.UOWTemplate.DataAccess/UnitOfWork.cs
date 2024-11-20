@@ -16,7 +16,7 @@ public class UnitOfWork : IUnitOfWork
     {
         return new Repository(_context);
     }
-    public Task<int> CommitAsync(CancellationToken cancellationToken)
+    public Task<int> CommitAsync(CancellationToken cancellationToken = default)
     {
         return _context.SaveChangesAsync(cancellationToken);
     }
