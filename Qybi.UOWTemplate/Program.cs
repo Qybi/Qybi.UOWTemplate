@@ -3,6 +3,7 @@ using Qybi.UOWTemplate.DataAccess.Contexts;
 using Qybi.UOWTemplate.DataAccess.Abstractions;
 using Qybi.UOWTemplate.DataAccess;
 using Qybi.UOWTemplate.DataAccess.Abstractions.Contexts;
+using Qybi.UOWTemplate.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,5 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapProductEndPoints();
+app.MapCategoryEndPoints();
 
 app.Run();

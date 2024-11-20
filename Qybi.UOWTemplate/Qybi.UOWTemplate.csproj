@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Qybi.UOWTemplate.DataAccess.Abstractions\Qybi.UOWTemplate.DataAccess.Abstractions.csproj" />
     <ProjectReference Include="..\Qybi.UOWTemplate.DataAccess\Qybi.UOWTemplate.DataAccess.csproj" />
+    <ProjectReference Include="..\Qybi.UOWTemplate.Helpers\Qybi.UOWTemplate.Helpers.csproj" />
     <ProjectReference Include="..\Qybi.UOWTemplate.Models\Qybi.UOWTemplate.Models.csproj" />
   </ItemGroup>
 
