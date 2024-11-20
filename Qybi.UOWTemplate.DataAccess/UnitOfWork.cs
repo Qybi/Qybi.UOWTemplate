@@ -21,22 +21,22 @@ public class UnitOfWork : IUnitOfWork
         return _context.SaveChangesAsync(cancellationToken);
     }
 
-    // dispose stuff
-    // disable finalizer
-    ~UnitOfWork()
-    {
-        Dispose(false);
-    }
-    // manually dispose context if not already disposed
-    public void Dispose() { 
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed)
-            if (disposing)
-                _context.Dispose();
-        _disposed = true;
-    }
+    // uncomment this code to manually dispose of uow if needed - Call the Dispose() method
+
+    //~UnitOfWork()
+    //{
+    //    Dispose(false);
+    //}
+    //// manually dispose context if not already disposed
+    //public void Dispose() { 
+    //    Dispose(true);
+    //    GC.SuppressFinalize(this);
+    //}
+    //protected virtual void Dispose(bool disposing)
+    //{
+    //    if (!_disposed)
+    //        if (disposing)
+    //            _context.Dispose();
+    //    _disposed = true;
+    //}
 }
