@@ -10,9 +10,9 @@ public static class CategoryEndpoint
 {
     public static IEndpointRouteBuilder MapCategoryEndPoints(this IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("api/v1/category")
+        var group = builder.MapGroup("api/v1/categories")
             .WithOpenApi()
-            .WithTags("Category");
+            .WithTags("Categories");
         group.MapGet("/", GetAllCategoriesAsync)
             .WithName("GetAllCategories");
         group.MapGet("/{id:int}", GetCategoryByIdAsync)
