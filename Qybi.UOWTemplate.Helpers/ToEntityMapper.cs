@@ -4,47 +4,31 @@ using Qybi.UOWTemplate.Models.Entities;
 
 namespace Qybi.UOWTemplate.Helpers;
 
-public class ToEntityMapper
+public static class ToEntityMapper
 {
-    public static Product Map(ProductDTO product)
+    public static Product Map(this ProductDTO productDTO)
     {
         return new Product
         {
-            Code = product.Code,
-            Name = product.Name,
-            Description = product.Description,
-            Price = product.Price,
-            CategoryId = product.Category.Id
+            Code = productDTO.Code,
+            Name = productDTO.Name,
+            Description = productDTO.Description,
+            Price = productDTO.Price,
+            CategoryId = productDTO.Category.Id
         };
     }
 
-    public static IEnumerable<Product> Map(IEnumerable<ProductDTO> products)
-    {
-        return products.Select(product => new Product
-        {
-            Code = product.Code,
-            Name = product.Name,
-            Description = product.Description,
-            Price = product.Price,
-            CategoryId = product.Category.Id
-        });
-    }
-
-    public static Category Map(CategoryDTO category)
+    public static Category Map(this CategoryDTO categoryDTO)
     {
         return new Category
         {
-            Name = category.Name,
-            Description = category.Description
+            Name = categoryDTO.Name,
+            Description = categoryDTO.Description
         };
     }
 
-    public static IEnumerable<Category> Map(IEnumerable<CategoryDTO> categories)
+    public static IEnumerable<TEntity> MapList<T, TEntity>(this IEnumerable<T> dtos, Func<T, TEntity> mapFunc)
     {
-        return categories.Select(category => new Category
-        {
-            Name = category.Name,
-            Description = category.Description
-        });
+        return dtos.Select(dto => mapFunc(dto));
     }
 }

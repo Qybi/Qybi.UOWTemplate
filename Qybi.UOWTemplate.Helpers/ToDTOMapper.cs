@@ -3,7 +3,7 @@ using Qybi.UOWTemplate.Models.Entities;
 
 namespace Qybi.UOWTemplate.Helpers;
 
-public class ToDTOMapper
+public static class ToDTOMapper
 {
     public static ProductDTO Map(Product product)
     {
@@ -16,17 +16,6 @@ public class ToDTOMapper
             Category = product.Category
         };
     }
-    public static IEnumerable<ProductDTO> Map(IEnumerable<Product> products)
-    {
-        return products.Select(item => new ProductDTO
-        {
-            Code = item.Code,
-            Name = item.Name,
-            Description = item.Description,
-            Price = item.Price,
-            Category = item.Category
-        }).ToList();
-    }
 
     public static CategoryDTO Map(Category category)
     {
@@ -38,13 +27,8 @@ public class ToDTOMapper
         };
     }
 
-    public static IEnumerable<CategoryDTO> Map(IEnumerable<Category> categories)
+    public static IEnumerable<TDTO> MapList<T, TDTO>(IEnumerable<T> entities, Func<T, TDTO> mapFunc)
     {
-        return categories.Select(item => new CategoryDTO
-        {
-            Name = item.Name,
-            Description = item.Description,
-            Products = item.Products
-        }).ToList();
+        return entities.Select(item => mapFunc(item)).ToList();
     }
 }
