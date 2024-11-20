@@ -1,5 +1,6 @@
 ﻿using Qybi.UOWTemplate.Models.DTO;
 using Qybi.UOWTemplate.Models.Entities;
+using System.Reflection;
 
 namespace Qybi.UOWTemplate.Helpers;
 
@@ -13,7 +14,20 @@ public static class ToDTOMapper
             Name = product.Name,
             Description = product.Description,
             Price = product.Price,
+            CategoryId = product.CategoryId,
             Category = product.Category
+        };
+    }
+
+    public static ProductDTOStrict MapStrict(Product product)
+    {
+        return new ProductDTOStrict
+        {
+            Code = product.Code,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            CategoryId = product.CategoryId
         };
     }
 
@@ -24,6 +38,15 @@ public static class ToDTOMapper
             Name = category.Name,
             Description = category.Description,
             Products = category.Products
+        };
+    }
+
+    public static CategoryDTOStrict MapStrict(Category category)
+    {
+        return new CategoryDTOStrict
+        {
+            Name = category.Name,
+            Description = category.Description
         };
     }
 

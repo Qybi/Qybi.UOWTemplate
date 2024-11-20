@@ -6,7 +6,7 @@ namespace Qybi.UOWTemplate.Helpers;
 
 public static class ToEntityMapper
 {
-    public static Product Map(this ProductDTO productDTO)
+    public static Product Map(ProductDTOStrict productDTO)
     {
         return new Product
         {
@@ -14,11 +14,11 @@ public static class ToEntityMapper
             Name = productDTO.Name,
             Description = productDTO.Description,
             Price = productDTO.Price,
-            CategoryId = productDTO.Category.Id
+            CategoryId = productDTO.CategoryId
         };
     }
 
-    public static Category Map(this CategoryDTO categoryDTO)
+    public static Category Map(CategoryDTOStrict categoryDTO)
     {
         return new Category
         {
@@ -27,7 +27,7 @@ public static class ToEntityMapper
         };
     }
 
-    public static IEnumerable<TEntity> MapList<T, TEntity>(this IEnumerable<T> dtos, Func<T, TEntity> mapFunc)
+    public static IEnumerable<TEntity> MapList<T, TEntity>(IEnumerable<T> dtos, Func<T, TEntity> mapFunc)
     {
         return dtos.Select(dto => mapFunc(dto));
     }
