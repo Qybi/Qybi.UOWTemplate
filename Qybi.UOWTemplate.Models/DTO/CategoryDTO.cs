@@ -5,7 +5,7 @@ namespace Qybi.UOWTemplate.Models.DTO;
 
 public class CategoryDTO : CategoryDTOStrict
 {
-    public ICollection<Product>? Products { get; set; }
+    public IEnumerable<ProductDTOStrict>? Products { get; set; }
 
     public CategoryDTOStrict ToStrict()
     {

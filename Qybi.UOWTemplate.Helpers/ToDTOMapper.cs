@@ -15,7 +15,7 @@ public static class ToDTOMapper
             Description = product.Description,
             Price = product.Price,
             CategoryId = product.CategoryId,
-            Category = product.Category
+            Category = MapStrict(product.Category)
         };
     }
 
@@ -37,7 +37,7 @@ public static class ToDTOMapper
         {
             Name = category.Name,
             Description = category.Description,
-            Products = category.Products
+            Products = MapList(category.Products, MapStrict)
         };
     }
 
