@@ -12,13 +12,16 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+    public DbSet<Product> Product { get; set; }
+    public DbSet<Category> Category { get; set; }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
     {
         // cycling all entities flagged for creation/update and automatically setting updatedAt timestamp
         foreach (var item in ChangeTracker.Entries<IEntity>().AsEnumerable())
             item.Entity.UpdatedAt = DateTime.Now;
 
-        return base.SaveChangesAsync(cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
