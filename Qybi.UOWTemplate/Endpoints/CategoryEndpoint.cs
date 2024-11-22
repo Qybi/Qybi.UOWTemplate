@@ -2,7 +2,6 @@
 using Qybi.UOWTemplate.DataAccess.Abstractions;
 using Qybi.UOWTemplate.Helpers;
 using Qybi.UOWTemplate.Models.DTO;
-using Qybi.UOWTemplate.Models.Entities;
 
 namespace Qybi.UOWTemplate.Endpoints;
 
@@ -27,13 +26,13 @@ public static class CategoryEndpoint
     }
     private static async Task<Ok<IEnumerable<CategoryDTOStrict>>> GetAllCategoriesAsync(IUnitOfWork _uow)
     {
-        var ents = await _uow.Repository().GetAllAsync<Category>();
+        var ents = await _uow.Categories.GetAllAsync();
         var results = ToDTOMapper.MapList(ents, ToDTOMapper.MapStrict);
         return TypedResults.Ok(results);
     }
     private static async Task<Results<Ok<CategoryDTOStrict>, NotFound>> GetCategoryByIdAsync(IUnitOfWork _uow, int id)
     {
-        var ent = await _uow.Repository().GetById<Category>(id);
+        var ent = await _uow.Categories.GetById(id);
         if (ent == null)
         {
             return TypedResults.NotFound();
@@ -44,14 +43,14 @@ public static class CategoryEndpoint
     private static async Task<Created<CategoryDTOStrict>> CreateCategoryAsync(IUnitOfWork _uow, CategoryDTOStrict categoryDto)
     {
         var category = ToEntityMapper.Map(categoryDto);
-        _uow.Repository().Add(category);
+        _uow.Categories.Add(category);
         await _uow.CommitAsync();
         var result = ToDTOMapper.MapStrict(category);
         return TypedResults.Created($"/api/v1/categories/{category.Id}", result);
     }
     private static async Task<Results<Ok<CategoryDTOStrict>, NotFound>> UpdateCategoryAsync(IUnitOfWork _uow, int id, CategoryDTOStrict categoryDto)
     {
-        var category = _uow.Repository().GetById<Category>(id);
+        var category = _uow.Categories.GetById(id);
 
         if (category == null)
         {
@@ -60,20 +59,20 @@ public static class CategoryEndpoint
 
         var updatedCategory = ToEntityMapper.Map(categoryDto) with { Id = id };
 
-        _uow.Repository().Update(updatedCategory);
+        _uow.Categories.Update(updatedCategory);
         await _uow.CommitAsync();
         var result = ToDTOMapper.MapStrict(updatedCategory);
         return TypedResults.Ok(result);
     }
     private static async Task<Results<NoContent, NotFound>> DeleteCategoryAsync(IUnitOfWork _uow, int id)
     {
-        var category = await _uow.Repository().GetById<Category>(id);
+        var category = await _uow.Categories.GetById(id);
         if (category == null)
         {
             return TypedResults.NotFound();
         }
 
-        _uow.Repository().Delete(category);
+        _uow.Categories.Delete(category);
         await _uow.CommitAsync();
 
         return TypedResults.NoContent();

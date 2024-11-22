@@ -34,14 +34,14 @@ public static class ProductEndpoint
 
     private static async Task<Ok<IEnumerable<ProductDTO>>> GetAllProductsAsync(IUnitOfWork _uow)
     {
-        var ents = await _uow.Repository().GetAllAsync<Product>();
+        var ents = await _uow.Products.GetAllWithCategory();
         var results = ToDTOMapper.MapList(ents, ToDTOMapper.Map);
         return TypedResults.Ok(results);
     }
 
     private static async Task<Results<Ok<ProductDTO>, NotFound>> GetProductByIdAsync(IUnitOfWork _uow, int id)
     {
-        var ent = await _uow.Repository().GetById<Product>(id);
+        var ent = await _uow.Products.GetById(id);
         if (ent == null)
         {
             return TypedResults.NotFound();
@@ -54,7 +54,7 @@ public static class ProductEndpoint
     {
         var product = ToEntityMapper.Map(productDto);
 
-        _uow.Repository().Add(product);
+        _uow.Products.Add(product);
         await _uow.CommitAsync();
 
         var result = ToDTOMapper.MapStrict(product);
@@ -63,7 +63,7 @@ public static class ProductEndpoint
 
     private static async Task<Results<Ok<ProductDTO>, NotFound>> UpdateProductAsync(IUnitOfWork _uow, int id, ProductDTO productDto)
     {
-        var product = await _uow.Repository().GetById<Product>(id);
+        var product = await _uow.Products.GetById(id);
         if (product == null)
         {
             return TypedResults.NotFound();
@@ -71,7 +71,7 @@ public static class ProductEndpoint
 
         var updatedProduct = ToEntityMapper.Map(productDto) with { Id = id };
 
-        _uow.Repository().Update(updatedProduct);
+        _uow.Products.Update(updatedProduct);
         await _uow.CommitAsync();
 
         var result = ToDTOMapper.Map(updatedProduct);
@@ -80,13 +80,13 @@ public static class ProductEndpoint
 
     private static async Task<Results<NoContent, NotFound>> DeleteProductAsync(IUnitOfWork _uow, int id)
     {
-        var product = await _uow.Repository().GetById<Product>(id);
+        var product = await _uow.Products.GetById(id);
         if (product == null)
         {
             return TypedResults.NotFound();
         }
 
-        _uow.Repository().Delete(product);
+        _uow.Products.Delete(product);
         await _uow.CommitAsync();
 
         return TypedResults.NoContent();
