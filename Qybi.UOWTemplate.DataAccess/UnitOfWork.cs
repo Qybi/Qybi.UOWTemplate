@@ -1,4 +1,6 @@
-﻿using Qybi.UOWTemplate.DataAccess.Abstractions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Qybi.UOWTemplate.DataAccess.Abstractions;
+using Qybi.UOWTemplate.DataAccess.Abstractions.Repositories;
 using Qybi.UOWTemplate.DataAccess.Contexts;
 
 namespace Qybi.UOWTemplate.DataAccess;
@@ -6,37 +8,32 @@ namespace Qybi.UOWTemplate.DataAccess;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _context;
-    private bool _disposed;
+    private readonly IServiceProvider _services;
 
-    public UnitOfWork(ApplicationDbContext context)
+    public UnitOfWork(ApplicationDbContext context, IServiceProvider services)
     {
         _context = context;
+        _services = services;
     }
-    public IRepository Repository()
+
+    private IProductsRepository? _productsRepository;
+    private ICategoriesRepository? _categoriesRepository;
+    public IProductsRepository Products
     {
-        return new Repository(_context);
+        get
+        {
+            if (_productsRepository is null)
+                _productsRepository = _services.GetRequiredService<IProductsRepository>();
+
+            return _productsRepository;
+        }
     }
+
+    // short version of the above getter
+    public ICategoriesRepository Categories => _categoriesRepository ??= _services.GetRequiredService<ICategoriesRepository>();
+
     public Task<int> CommitAsync(CancellationToken cancellationToken = default)
     {
         return _context.SaveChangesAsync(cancellationToken);
     }
-
-    // uncomment this code to manually dispose of uow if needed - Call the Dispose() method
-
-    //~UnitOfWork()
-    //{
-    //    Dispose(false);
-    //}
-    //// manually dispose context if not already disposed
-    //public void Dispose() { 
-    //    Dispose(true);
-    //    GC.SuppressFinalize(this);
-    //}
-    //protected virtual void Dispose(bool disposing)
-    //{
-    //    if (!_disposed)
-    //        if (disposing)
-    //            _context.Dispose();
-    //    _disposed = true;
-    //}
 }

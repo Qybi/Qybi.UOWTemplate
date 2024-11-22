@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Qybi.UOWTemplate.Models\Qybi.UOWTemplate.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

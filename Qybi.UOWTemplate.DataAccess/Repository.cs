@@ -1,36 +1,35 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Qybi.UOWTemplate.DataAccess.Abstractions;
-using Qybi.UOWTemplate.DataAccess.Abstractions.Contexts;
+using Qybi.UOWTemplate.DataAccess.Contexts;
 using Qybi.UOWTemplate.Models;
 using System.Linq.Expressions;
 
 namespace Qybi.UOWTemplate.DataAccess;
 
-public class Repository : IRepository
+public class Repository<T> : IRepository<T> where T : IEntity
 {
-    private readonly IApplicationDbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext;
 
-    public Repository(IApplicationDbContext dbContext)
+    public Repository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task<T?> GetById<T>(int id, CancellationToken cancellationToken = default) where T : IEntity
+    public async Task<T?> GetById(int id, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Set<T>().FindAsync(id);
     }
 
-    public IQueryable<T> GetQueryable<T>(Expression<Func<T, bool>> expression,
-        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null) where T : IEntity
+    public IQueryable<T> GetQueryable(Expression<Func<T, bool>> expression,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null)
     {
         var query = _dbContext.Set<T>().Where(expression);
         return orderBy != null ? orderBy(query) : query;
     }
 
-    public Task<List<T>> GetListAsync<T>(Expression<Func<T, bool>>? expression, Func<IQueryable<T>,
+    public Task<List<T>> GetListAsync(Expression<Func<T, bool>>? expression, Func<IQueryable<T>,
         IOrderedQueryable<T>>? orderBy = null, CancellationToken cancellationToken = default)
-        where T : class
     {
         var query = expression != null ? _dbContext.Set<T>().Where(expression) : _dbContext.Set<T>();
         return orderBy != null
@@ -38,12 +37,12 @@ public class Repository : IRepository
             : query.ToListAsync(cancellationToken);
     }
 
-    public Task<List<T>> GetAllAsync<T>(CancellationToken cancellationToken) where T : IEntity
+    public Task<List<T>> GetAllAsync(CancellationToken cancellationToken)
     {
         return _dbContext.Set<T>().ToListAsync(cancellationToken);
     }
 
-    public Task<T?> SingleOrDefaultAsync<T>(Expression<Func<T, bool>> expression, string includeProperties, CancellationToken cancellationToken = default) where T : IEntity
+    public Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> expression, string includeProperties, CancellationToken cancellationToken = default)
     {
         var query = _dbContext.Set<T>().AsQueryable();
 
@@ -54,22 +53,22 @@ public class Repository : IRepository
         return query.SingleOrDefaultAsync(expression);
     }
 
-    public T Add<T>(T entity) where T : IEntity
+    public T Add(T entity)
     {
         return _dbContext.Set<T>().Add(entity).Entity;
     }
 
-    public void Update<T>(T entity) where T : IEntity
+    public void Update(T entity)
     {
         _dbContext.Entry(entity).State = EntityState.Modified;
     }
 
-    public void UpdateRange<T>(IEnumerable<T> entities) where T : IEntity
+    public void UpdateRange(IEnumerable<T> entities)
     {
         _dbContext.Set<T>().UpdateRange(entities);
     }
 
-    public void Delete<T>(T entity) where T : IEntity
+    public void Delete(T entity)
     {
         _dbContext.Set<T>().Remove(entity);
     }
